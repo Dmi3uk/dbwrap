@@ -10,20 +10,19 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("/clients")
 public class ClientController {
 
     @Resource(name = "clientService")
     private ClientService clientService;
 
 
-    @PostMapping(value = "/create")
+    @PostMapping(value = "/clients")
     public ResponseEntity<?> create(@RequestBody ClientData clientData) {
         clientService.create(clientData);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping(value = "/read")
+    @GetMapping(value = "/clients")
     public ResponseEntity<List<ClientData>> read() {
         final List<ClientData> clients = clientService.getAllClients();
 
@@ -32,7 +31,7 @@ public class ClientController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/read/{id}")
+    @GetMapping(value = "/clients/{id}")
     public ResponseEntity<ClientData> read(@PathVariable(name = "id") long id) {
         final ClientData client = clientService.getClientById(id);
 
@@ -41,7 +40,7 @@ public class ClientController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping(value = "/update/{id}")
+    @PutMapping(value = "/clients/{id}")
     public ResponseEntity<?> update(@PathVariable(name = "id") long id, @RequestBody ClientData clientData) {
         final boolean updated = clientService.updateClient(clientData, id);
 
@@ -50,7 +49,7 @@ public class ClientController {
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
-    @DeleteMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/clients/{id}")
     public ResponseEntity<?> delete(@PathVariable(name = "id") long id) {
 
         return clientService.deleteClient(id)

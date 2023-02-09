@@ -6,9 +6,9 @@ import com.daky.registerclientservice.dbwrap.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service("clientService")
 public class ClientServiceImpl implements ClientService {
@@ -34,7 +34,11 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ClientData getClientById(long clientId) {
-        return populateClientData(clientRepository.findById(clientId).orElseThrow(() -> new EntityNotFoundException("Client not found")));
+        Optional<Client> client = clientRepository.findById(clientId);
+        if(client.isEmpty()) {
+            return null;
+        }
+        return populateClientData(client.get());
     }
 
     @Override
