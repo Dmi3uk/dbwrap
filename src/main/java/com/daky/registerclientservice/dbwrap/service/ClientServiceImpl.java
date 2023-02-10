@@ -33,12 +33,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientData getClientById(long clientId) {
+    public Optional<ClientData> getClientById(long clientId) {
         Optional<Client> client = clientRepository.findById(clientId);
         if(client.isEmpty()) {
             return null;
         }
-        return populateClientData(client.get());
+        return Optional.of(populateClientData(client.get()));
     }
 
     @Override

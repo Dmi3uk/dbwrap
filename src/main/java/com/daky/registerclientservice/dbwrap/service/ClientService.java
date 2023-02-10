@@ -3,6 +3,7 @@ package com.daky.registerclientservice.dbwrap.service;
 import com.daky.registerclientservice.dbwrap.dto.ClientData;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ClientService {
 
@@ -23,7 +24,7 @@ public interface ClientService {
      * @param id - Client ID
      * @return - client object with the specified ID
      */
-    ClientData getClientById(long id);
+    Optional<ClientData> getClientById(long id);
 
     /**
      * Updates the client with the specified ID
