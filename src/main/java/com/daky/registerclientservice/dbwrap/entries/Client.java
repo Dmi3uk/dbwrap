@@ -1,4 +1,4 @@
-package com.daky.registerclientservice.dbwrap.data;
+package com.daky.registerclientservice.dbwrap.entries;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

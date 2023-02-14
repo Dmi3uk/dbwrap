@@ -1,7 +1,7 @@
-package com.daky.registerclientservice.dbwrap.controller;
+package com.daky.registerclientservice.dbwrap.controllers;
 
 import com.daky.registerclientservice.dbwrap.dto.ClientData;
-import com.daky.registerclientservice.dbwrap.service.ClientService;
+import com.daky.registerclientservice.dbwrap.services.RegisterService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,18 +14,17 @@ import java.util.Optional;
 public class ClientController {
 
     @Resource(name = "clientService")
-    private ClientService clientService;
-
+    private RegisterService registerService;
 
     @PostMapping(value = "/clients")
-    public ResponseEntity<?> create(@RequestBody ClientData clientData) {
-        clientService.create(clientData);
+    public ResponseEntity<?> createClient(@RequestBody ClientData clientData) {
+        registerService.create(clientData);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/clients")
-    public ResponseEntity<List<ClientData>> read() {
-        final List<ClientData> clients = clientService.getAllClients();
+    public ResponseEntity<List<ClientData>> getAllClients() {
+        final List<ClientData> clients = registerService.getAll();
 
         return clients != null &&  !clients.isEmpty()
                 ? new ResponseEntity<>(clients, HttpStatus.OK)
@@ -33,8 +32,8 @@ public class ClientController {
     }
 
     @GetMapping(value = "/clients/{id}")
-    public ResponseEntity<?> read(@PathVariable(name = "id") long id) {
-        final Optional<ClientData> client = clientService.getClientById(id);
+    public ResponseEntity<?> getClientByID(@PathVariable(name = "id") long id) {
+        final Optional<ClientData> client = registerService.getById(id);
 
         return client != null
                 ? new ResponseEntity<>(client, HttpStatus.OK)
@@ -42,8 +41,8 @@ public class ClientController {
     }
 
     @PutMapping(value = "/clients/{id}")
-    public ResponseEntity<?> update(@PathVariable(name = "id") long id, @RequestBody ClientData clientData) {
-        final boolean updated = clientService.updateClient(clientData, id);
+    public ResponseEntity<?> updateClient(@PathVariable(name = "id") long id, @RequestBody ClientData clientData) {
+        final boolean updated = registerService.update(clientData, id);
 
         return updated
                 ? new ResponseEntity<>(HttpStatus.OK)
@@ -51,9 +50,9 @@ public class ClientController {
     }
 
     @DeleteMapping(value = "/clients/{id}")
-    public ResponseEntity<?> delete(@PathVariable(name = "id") long id) {
+    public ResponseEntity<?> deleteClient(@PathVariable(name = "id") long id) {
 
-        return clientService.deleteClient(id)
+        return registerService.delete(id)
                 ? new ResponseEntity<>(HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }

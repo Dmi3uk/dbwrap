@@ -1,8 +1,8 @@
-package com.daky.registerclientservice.dbwrap.service;
+package com.daky.registerclientservice.dbwrap.services;
 
-import com.daky.registerclientservice.dbwrap.data.Client;
+import com.daky.registerclientservice.dbwrap.entries.Client;
 import com.daky.registerclientservice.dbwrap.dto.ClientData;
-import com.daky.registerclientservice.dbwrap.repository.ClientRepository;
+import com.daky.registerclientservice.dbwrap.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service("clientService")
-public class ClientServiceImpl implements ClientService {
+public class ClientServiceImpl implements RegisterService<ClientData,ClientData> {
 
     @Autowired
     private ClientRepository clientRepository;
@@ -23,7 +23,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<ClientData> getAllClients() {
+    public List<ClientData> getAll() {
         List<ClientData> clients = new ArrayList<>();
         List<Client> clientList = clientRepository.findAll();
         clientList.forEach(client -> {
@@ -33,7 +33,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Optional<ClientData> getClientById(long clientId) {
+    public Optional<ClientData> getById(long clientId) {
         Optional<Client> client = clientRepository.findById(clientId);
         if(client.isEmpty()) {
             return null;
@@ -42,7 +42,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public boolean updateClient(ClientData clientData, long clientId) {
+    public boolean update(ClientData clientData, long clientId) {
         if (clientRepository.existsById(clientId)) {
             Client client = populateClientEntity(clientData);
             client.setId(clientId);
@@ -53,7 +53,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public boolean deleteClient(long clientId) {
+    public boolean delete(long clientId) {
         if (clientRepository.existsById(clientId)) {
             clientRepository.deleteById(clientId);
             return true;
