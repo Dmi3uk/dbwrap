@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service("clientService")
-public class ClientServiceImpl implements RegisterService<ClientData,ClientData> {
+public class ClientServiceImpl implements RegisterService<ClientData, ClientData, Long> {
 
     @Autowired
     private ClientRepository clientRepository;
@@ -33,7 +33,7 @@ public class ClientServiceImpl implements RegisterService<ClientData,ClientData>
     }
 
     @Override
-    public Optional<ClientData> getById(long clientId) {
+    public Optional<ClientData> getById(Long clientId) {
         Optional<Client> client = clientRepository.findById(clientId);
         if(client.isEmpty()) {
             return null;
@@ -42,7 +42,7 @@ public class ClientServiceImpl implements RegisterService<ClientData,ClientData>
     }
 
     @Override
-    public boolean update(ClientData clientData, long clientId) {
+    public boolean update(ClientData clientData, Long clientId) {
         if (clientRepository.existsById(clientId)) {
             Client client = populateClientEntity(clientData);
             client.setId(clientId);
@@ -53,7 +53,7 @@ public class ClientServiceImpl implements RegisterService<ClientData,ClientData>
     }
 
     @Override
-    public boolean delete(long clientId) {
+    public boolean delete(Long clientId) {
         if (clientRepository.existsById(clientId)) {
             clientRepository.deleteById(clientId);
             return true;

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service("masterService")
-public class MasterServiceImpl implements RegisterService<MasterData, MasterData> {
+public class MasterServiceImpl implements RegisterService<MasterData, MasterData, Long> {
 
     @Autowired
     private MasterRepository masterRepository;
@@ -34,7 +34,7 @@ public class MasterServiceImpl implements RegisterService<MasterData, MasterData
     }
 
     @Override
-    public Optional<MasterData> getById(long masterId) {
+    public Optional<MasterData> getById(Long masterId) {
         Optional<Master> master = masterRepository.findById(masterId);
         if(master.isEmpty()) {
             return null;
@@ -43,7 +43,7 @@ public class MasterServiceImpl implements RegisterService<MasterData, MasterData
     }
 
     @Override
-    public boolean update(MasterData masterData, long masterId) {
+    public boolean update(MasterData masterData, Long masterId) {
         if (masterRepository.existsById(masterId)) {
             Master master = populateMasterEntity(masterData);
             master.setId(masterId);
@@ -54,7 +54,7 @@ public class MasterServiceImpl implements RegisterService<MasterData, MasterData
     }
 
     @Override
-    public boolean delete(long masterId) {
+    public boolean delete(Long masterId) {
         if (masterRepository.existsById(masterId)) {
             masterRepository.deleteById(masterId);
             return true;

@@ -3,16 +3,16 @@ package com.daky.registerclientservice.dbwrap.services;
 import java.util.List;
 import java.util.Optional;
 
-public interface RegisterService<T, R> {
+public interface RegisterService<T, R, B> {
 
     R create(T entry);
 
     List<R> getAll();
 
-    Optional<R> getById(long id);
+    Optional<R> getById(B id);
 
-    boolean update(R entry, long id);
+    boolean update(R entry, B id);
 
-    boolean delete(long id);
+    boolean delete(B id);
 }
 
