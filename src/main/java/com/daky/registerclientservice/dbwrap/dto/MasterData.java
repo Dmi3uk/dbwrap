@@ -1,5 +1,7 @@
 package com.daky.registerclientservice.dbwrap.dto;
 
+import java.util.Set;
+
 public class MasterData {
     private long id;
     private String name;
@@ -7,6 +9,7 @@ public class MasterData {
     private String email;
     private String phone;
     private String nickName;
+    private Set<SkillsPrices> skillsPricesSet;
 
     public MasterData() {
     }
@@ -58,5 +61,13 @@ public class MasterData {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
+    }
+
+    public Set<SkillsPrices> getSkillsPricesSet() {
+        return skillsPricesSet;
+    }
+
+    public void setSkillsPricesSet(Set<SkillsPrices> skillsPricesSet) {
+        this.skillsPricesSet = skillsPricesSet;
     }
 }

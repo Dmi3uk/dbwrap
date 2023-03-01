@@ -1,7 +1,7 @@
 package com.daky.registerclientservice.dbwrap.controllers;
 
 import com.daky.registerclientservice.dbwrap.dto.MasterData;
-import com.daky.registerclientservice.dbwrap.services.RegisterService;
+import com.daky.registerclientservice.dbwrap.services.AbstractRegisterService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ import java.util.Optional;
 public class MasterController {
 
     @Resource(name = "masterService")
-    private RegisterService registerService;
+    private AbstractRegisterService registerService;
 
 
     @PostMapping(value = "/masters")

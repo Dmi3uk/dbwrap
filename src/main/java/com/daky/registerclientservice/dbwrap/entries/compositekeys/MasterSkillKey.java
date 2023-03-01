@@ -14,6 +14,14 @@ public class MasterSkillKey implements Serializable {
     @Column(name = "skill_id")
     private long skillID;
 
+    public MasterSkillKey() {
+    }
+
+    public MasterSkillKey(long masterID, long skillID) {
+        this.masterID = masterID;
+        this.skillID = skillID;
+    }
+
     public long getMasterID() {
         return masterID;
     }

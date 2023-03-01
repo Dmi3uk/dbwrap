@@ -3,7 +3,7 @@ package com.daky.registerclientservice.dbwrap.services;
 import java.util.List;
 import java.util.Optional;
 
-public interface RegisterService<T, R, B> {
+public interface AbstractRegisterService<T, R, B> {
 
     R create(T entry);
 

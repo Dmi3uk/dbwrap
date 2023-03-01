@@ -1,11 +1,13 @@
 package com.daky.registerclientservice.dbwrap.entries;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
+import java.util.Set;
 
 @Entity
 @Table(name = "masters")
@@ -28,6 +30,9 @@ public class Master {
 
     @Column(name = "nickname")
     private String nickName;
+
+    @OneToMany(mappedBy = "master")
+    Set<MasterSkillPrice> masterSkillPriceSet;
 
     public Long getId() {
         return id;
@@ -75,6 +80,14 @@ public class Master {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
+    }
+
+    public Set<MasterSkillPrice> getMasterSkillPriceSet() {
+        return masterSkillPriceSet;
+    }
+
+    public void setMasterSkillPriceSet(Set<MasterSkillPrice> masterSkillPriceSet) {
+        this.masterSkillPriceSet = masterSkillPriceSet;
     }
 }
 

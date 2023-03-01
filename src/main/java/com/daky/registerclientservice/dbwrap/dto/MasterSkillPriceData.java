@@ -10,6 +10,9 @@ public class MasterSkillPriceData {
     private Skill skill;
     private int price;
 
+    public MasterSkillPriceData() {
+    }
+
     public MasterSkillKey getId() {
         return id;
     }

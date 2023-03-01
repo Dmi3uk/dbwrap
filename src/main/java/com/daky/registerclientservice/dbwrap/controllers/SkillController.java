@@ -1,8 +1,7 @@
 package com.daky.registerclientservice.dbwrap.controllers;
 
-import com.daky.registerclientservice.dbwrap.dto.MasterData;
 import com.daky.registerclientservice.dbwrap.dto.SkillData;
-import com.daky.registerclientservice.dbwrap.services.RegisterService;
+import com.daky.registerclientservice.dbwrap.services.AbstractRegisterService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,7 +19,7 @@ import java.util.Optional;
 @RestController
 public class SkillController {
     @Resource(name = "skillService")
-    private RegisterService registerService;
+    private AbstractRegisterService registerService;
 
 
     @PostMapping(value = "/skills")

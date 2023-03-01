@@ -1,5 +1,6 @@
 package com.daky.registerclientservice.dbwrap.services;
 
+import com.daky.registerclientservice.dbwrap.converters.SkillConverterImpl;
 import com.daky.registerclientservice.dbwrap.dto.SkillData;
 import com.daky.registerclientservice.dbwrap.entries.Skill;
 import com.daky.registerclientservice.dbwrap.repositories.SkillRepository;
@@ -11,15 +12,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Service("skillService")
-public class SkillServiceImpl implements RegisterService<SkillData, SkillData, Long> {
+public class SkillServiceImpl implements AbstractRegisterService<SkillData, SkillData, Long> {
 
     @Autowired
     private SkillRepository skillRepository;
+    @Autowired
+    SkillConverterImpl skillConverter;
 
     @Override
     public SkillData create(SkillData skillData) {
-        Skill skill = populateSkillEntity(skillData);
-        return populateSkillData(skillRepository.save(skill));
+        Skill skill = skillConverter.populateEntity(skillData);
+        return skillConverter.populateData(skillRepository.save(skill));
     }
 
     @Override
@@ -27,7 +30,7 @@ public class SkillServiceImpl implements RegisterService<SkillData, SkillData, L
         List<SkillData> skills = new ArrayList<>();
         List<Skill> skillList = skillRepository.findAll();
         skillList.forEach(skill -> {
-            skills.add(populateSkillData(skill));
+            skills.add(skillConverter.populateData(skill));
         });
         return skills;
     }
@@ -38,13 +41,13 @@ public class SkillServiceImpl implements RegisterService<SkillData, SkillData, L
         if(skill.isEmpty()) {
             return null;
         }
-        return Optional.of(populateSkillData(skill.get()));
+        return Optional.of(skillConverter.populateData(skill.get()));
     }
 
     @Override
     public boolean update(SkillData skillData, Long skillId) {
         if (skillRepository.existsById(skillId)) {
-            Skill skill = populateSkillEntity(skillData);
+            Skill skill = skillConverter.populateEntity(skillData);
             skill.setId(skillId);
             skillRepository.save(skill);
             return true;
@@ -59,29 +62,5 @@ public class SkillServiceImpl implements RegisterService<SkillData, SkillData, L
             return true;
         }
         return false;
-    }
-
-    /**
-     * Internal method to convert Customer JPA entity to the DTO object
-     * for frontend data
-     * @param skill
-     * @return skillData
-     */
-    private SkillData populateSkillData(final Skill skill) {
-        SkillData skillData = new SkillData();
-        skillData.setId(skill.getId());
-        skillData.setTitle(skill.getTitle());
-        return skillData;
-    }
-
-    /**
-     * Method to map the front end customer object to the JPA customer entity.
-     * @param skillData
-     * @return skill
-     */
-    private Skill populateSkillEntity(SkillData skillData) {
-        Skill skill = new Skill();
-        skill.setTitle(skillData.getTitle());
-        return skill;
     }
 }

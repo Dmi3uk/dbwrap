@@ -1,12 +1,11 @@
 package com.daky.registerclientservice.dbwrap.dto;
 
-import com.daky.registerclientservice.dbwrap.entries.MasterSkillPrice;
-
-import java.util.Set;
-
 public class SkillData {
     private long id;
     private String title;
+
+    public SkillData() {
+    }
 
     public long getId() {
         return id;
@@ -23,5 +22,4 @@ public class SkillData {
     public void setTitle(String title) {
         this.title = title;
     }
-
 }

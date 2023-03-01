@@ -1,5 +1,6 @@
 package com.daky.registerclientservice.dbwrap.services;
 
+import com.daky.registerclientservice.dbwrap.converters.MasterSkillPriceConverterImpl;
 import com.daky.registerclientservice.dbwrap.dto.MasterSkillPriceData;
 import com.daky.registerclientservice.dbwrap.entries.MasterSkillPrice;
 import com.daky.registerclientservice.dbwrap.entries.compositekeys.MasterSkillKey;
@@ -12,15 +13,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Service("masterSkillPriceService")
-public class MasterSkillPriceServiceImpl implements RegisterService<MasterSkillPriceData, MasterSkillPriceData, MasterSkillKey> {
+public class MasterSkillPriceServiceImpl implements AbstractRegisterService<MasterSkillPriceData, MasterSkillPriceData, MasterSkillKey> {
 
     @Autowired
     private MasterSkillPriceRepository masterSkillPriceRepository;
+    @Autowired
+    MasterSkillPriceConverterImpl masterSkillPriceConverter;
 
     @Override
     public MasterSkillPriceData create(MasterSkillPriceData masterSkillPriceData) {
-        MasterSkillPrice masterSkillPrice = populateMasterSkillPriceEntity(masterSkillPriceData);
-        return populateMasterSkillPriceData(masterSkillPriceRepository.save(masterSkillPrice));
+        MasterSkillPrice masterSkillPrice = masterSkillPriceConverter.populateEntity(masterSkillPriceData);
+        return masterSkillPriceConverter.populateData(masterSkillPriceRepository.save(masterSkillPrice));
     }
 
     @Override
@@ -28,7 +31,7 @@ public class MasterSkillPriceServiceImpl implements RegisterService<MasterSkillP
         List<MasterSkillPriceData> masterSkillPriceDataList = new ArrayList<>();
         List<MasterSkillPrice> masterSkillPriceList = masterSkillPriceRepository.findAll();
         masterSkillPriceList.forEach(masterSkillPrice -> {
-            masterSkillPriceDataList.add(populateMasterSkillPriceData(masterSkillPrice));
+            masterSkillPriceDataList.add(masterSkillPriceConverter.populateData(masterSkillPrice));
         });
         return masterSkillPriceDataList;
     }
@@ -39,13 +42,13 @@ public class MasterSkillPriceServiceImpl implements RegisterService<MasterSkillP
         if(masterSkillPrice.isEmpty()) {
             return null;
         }
-        return Optional.of(populateMasterSkillPriceData(masterSkillPrice.get()));
+        return Optional.of(masterSkillPriceConverter.populateData(masterSkillPrice.get()));
     }
 
     @Override
     public boolean update(MasterSkillPriceData masterSkillPriceData, MasterSkillKey masterSkillKey) {
         if (masterSkillPriceRepository.existsById(masterSkillKey)) {
-            MasterSkillPrice masterSkillPrice = populateMasterSkillPriceEntity(masterSkillPriceData);
+            MasterSkillPrice masterSkillPrice = masterSkillPriceConverter.populateEntity(masterSkillPriceData);
             masterSkillPrice.setId(masterSkillKey);
             masterSkillPriceRepository.save(masterSkillPrice);
             return true;
@@ -60,34 +63,5 @@ public class MasterSkillPriceServiceImpl implements RegisterService<MasterSkillP
             return true;
         }
         return false;
-    }
-
-    /**
-     * Internal method to convert Customer JPA entity to the DTO object
-     * for frontend data
-     * @param masterSkillPrice
-     * @return masterSkillPriceData
-     */
-    private MasterSkillPriceData populateMasterSkillPriceData(final MasterSkillPrice masterSkillPrice) {
-        MasterSkillPriceData masterSkillPriceData = new MasterSkillPriceData();
-        masterSkillPriceData.setId(masterSkillPrice.getId());
-        masterSkillPriceData.setMaster(masterSkillPrice.getMaster());
-        masterSkillPriceData.setSkill(masterSkillPrice.getSkill());
-        masterSkillPriceData.setPrice(masterSkillPrice.getPrice());
-        return masterSkillPriceData;
-    }
-
-    /**
-     * Method to map the front end customer object to the JPA customer entity.
-     * @param masterSkillPriceData
-     * @return masterSkillPrice
-     */
-    private MasterSkillPrice populateMasterSkillPriceEntity(MasterSkillPriceData masterSkillPriceData) {
-        MasterSkillPrice masterSkillPrice = new MasterSkillPrice();
-        masterSkillPrice.setId(masterSkillPriceData.getId());
-        masterSkillPrice.setMaster(masterSkillPriceData.getMaster());
-        masterSkillPrice.setSkill(masterSkillPriceData.getSkill());
-        masterSkillPrice.setPrice(masterSkillPriceData.getPrice());
-        return masterSkillPrice;
     }
 }

@@ -1,14 +1,12 @@
 package com.daky.registerclientservice.dbwrap.controllers;
 
 import com.daky.registerclientservice.dbwrap.dto.MasterSkillPriceData;
-import com.daky.registerclientservice.dbwrap.dto.SkillData;
 import com.daky.registerclientservice.dbwrap.entries.compositekeys.MasterSkillKey;
-import com.daky.registerclientservice.dbwrap.services.RegisterService;
+import com.daky.registerclientservice.dbwrap.services.AbstractRegisterService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +20,7 @@ import java.util.Optional;
 @RestController
 public class MasterSkillPriceController {
     @Resource(name = "masterSkillPriceService")
-    private RegisterService registerService;
+    private AbstractRegisterService registerService;
 
 
     @PostMapping(value = "/masterSkillPrices")
@@ -43,9 +41,7 @@ public class MasterSkillPriceController {
     @GetMapping(value = "/masterSkillPrices/id")
     public ResponseEntity<?> getMasterSkillPriceByID(@RequestParam(name = "masterID") long masterID,
                                                      @RequestParam(name = "skillID") long skillID) {
-        MasterSkillKey id = new MasterSkillKey();
-        id.setMasterID(masterID);
-        id.setSkillID(skillID);
+        MasterSkillKey id = new MasterSkillKey(masterID, skillID);
         final Optional<MasterSkillPriceData> masterSkillPriceData = registerService.getById(id);
 
         return masterSkillPriceData != null
@@ -57,9 +53,7 @@ public class MasterSkillPriceController {
     public ResponseEntity<?> updateMasterSkillPrice(@RequestParam(name = "masterID") long masterID,
                                                     @RequestParam(name = "skillID") long skillID,
                                                     @RequestBody MasterSkillPriceData masterSkillPriceData) {
-        MasterSkillKey id = new MasterSkillKey();
-        id.setMasterID(masterID);
-        id.setSkillID(skillID);
+        MasterSkillKey id = new MasterSkillKey(masterID, skillID);
         final boolean updated = registerService.update(masterSkillPriceData, id);
 
         return updated
@@ -71,9 +65,7 @@ public class MasterSkillPriceController {
     public ResponseEntity<?> deleteMasterSkillPrice(@RequestParam(name = "masterID") long masterID,
                                                     @RequestParam(name = "skillID") long skillID) {
 
-        MasterSkillKey id = new MasterSkillKey();
-        id.setMasterID(masterID);
-        id.setSkillID(skillID);
+        MasterSkillKey id = new MasterSkillKey(masterID, skillID);
         return registerService.delete(id)
                 ? new ResponseEntity<>(HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);

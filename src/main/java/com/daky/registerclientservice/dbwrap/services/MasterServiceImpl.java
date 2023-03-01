@@ -1,5 +1,6 @@
 package com.daky.registerclientservice.dbwrap.services;
 
+import com.daky.registerclientservice.dbwrap.converters.MasterConverterImpl;
 import com.daky.registerclientservice.dbwrap.entries.Master;
 import com.daky.registerclientservice.dbwrap.dto.MasterData;
 import com.daky.registerclientservice.dbwrap.repositories.MasterRepository;
@@ -11,16 +12,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Service("masterService")
-public class MasterServiceImpl implements RegisterService<MasterData, MasterData, Long> {
+public class MasterServiceImpl implements AbstractRegisterService<MasterData, MasterData, Long> {
 
     @Autowired
     private MasterRepository masterRepository;
+    @Autowired
+    private MasterConverterImpl masterConverter;
 
 
     @Override
     public MasterData create(MasterData masterData) {
-        Master master = populateMasterEntity(masterData);
-        return populateMasterData(masterRepository.save(master));
+        Master master = masterConverter.populateEntity(masterData);
+        return masterConverter.populateData(masterRepository.save(master));
     }
 
     @Override
@@ -28,7 +31,7 @@ public class MasterServiceImpl implements RegisterService<MasterData, MasterData
         List<MasterData> masters = new ArrayList<>();
         List<Master> masterList = masterRepository.findAll();
         masterList.forEach(master -> {
-            masters.add(populateMasterData(master));
+            masters.add(masterConverter.populateData(master));
         });
         return masters;
     }
@@ -39,13 +42,13 @@ public class MasterServiceImpl implements RegisterService<MasterData, MasterData
         if(master.isEmpty()) {
             return null;
         }
-        return Optional.of(populateMasterData(master.get()));
+        return Optional.of(masterConverter.populateData(master.get()));
     }
 
     @Override
     public boolean update(MasterData masterData, Long masterId) {
         if (masterRepository.existsById(masterId)) {
-            Master master = populateMasterEntity(masterData);
+            Master master = masterConverter.populateEntity(masterData);
             master.setId(masterId);
             masterRepository.save(master);
             return true;
@@ -60,37 +63,5 @@ public class MasterServiceImpl implements RegisterService<MasterData, MasterData
             return true;
         }
         return false;
-    }
-
-    /**
-     * Internal method to convert Customer JPA entity to the DTO object
-     * for frontend data
-     * @param master
-     * @return masterData
-     */
-    private MasterData populateMasterData(final Master master) {
-        MasterData masterData = new MasterData();
-        masterData.setId(master.getId());
-        masterData.setName(master.getName());
-        masterData.setSurname(master.getSurname());
-        masterData.setEmail(master.getEmail());
-        masterData.setPhone(master.getPhone());
-        masterData.setNickName(master.getNickName());
-        return masterData;
-    }
-
-    /**
-     * Method to map the front end customer object to the JPA customer entity.
-     * @param masterData
-     * @return master
-     */
-    private Master populateMasterEntity(MasterData masterData) {
-        Master master = new Master();
-        master.setName(masterData.getName());
-        master.setSurname(masterData.getSurname());
-        master.setEmail(masterData.getEmail());
-        master.setPhone(masterData.getPhone());
-        master.setNickName(masterData.getNickName());
-        return master;
     }
 }

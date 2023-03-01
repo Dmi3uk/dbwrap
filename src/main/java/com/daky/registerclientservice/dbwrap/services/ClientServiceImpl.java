@@ -1,5 +1,6 @@
 package com.daky.registerclientservice.dbwrap.services;
 
+import com.daky.registerclientservice.dbwrap.converters.ClientConverterImpl;
 import com.daky.registerclientservice.dbwrap.entries.Client;
 import com.daky.registerclientservice.dbwrap.dto.ClientData;
 import com.daky.registerclientservice.dbwrap.repositories.ClientRepository;
@@ -11,15 +12,17 @@ import java.util.List;
 import java.util.Optional;
 
 @Service("clientService")
-public class ClientServiceImpl implements RegisterService<ClientData, ClientData, Long> {
+public class ClientServiceImpl implements AbstractRegisterService<ClientData, ClientData, Long> {
 
     @Autowired
     private ClientRepository clientRepository;
+    @Autowired
+    ClientConverterImpl clientConverter;
 
     @Override
     public ClientData create(ClientData clientData) {
-        Client client = populateClientEntity(clientData);
-        return populateClientData(clientRepository.save(client));
+        Client client = clientConverter.populateEntity(clientData);
+        return clientConverter.populateData(clientRepository.save(client));
     }
 
     @Override
@@ -27,7 +30,7 @@ public class ClientServiceImpl implements RegisterService<ClientData, ClientData
         List<ClientData> clients = new ArrayList<>();
         List<Client> clientList = clientRepository.findAll();
         clientList.forEach(client -> {
-            clients.add(populateClientData(client));
+            clients.add(clientConverter.populateData(client));
         });
         return clients;
     }
@@ -38,13 +41,13 @@ public class ClientServiceImpl implements RegisterService<ClientData, ClientData
         if(client.isEmpty()) {
             return null;
         }
-        return Optional.of(populateClientData(client.get()));
+        return Optional.of(clientConverter.populateData(client.get()));
     }
 
     @Override
     public boolean update(ClientData clientData, Long clientId) {
         if (clientRepository.existsById(clientId)) {
-            Client client = populateClientEntity(clientData);
+            Client client = clientConverter.populateEntity(clientData);
             client.setId(clientId);
             clientRepository.save(client);
             return true;
@@ -59,35 +62,5 @@ public class ClientServiceImpl implements RegisterService<ClientData, ClientData
             return true;
         }
         return false;
-    }
-
-    /**
-     * Internal method to convert Customer JPA entity to the DTO object
-     * for frontend data
-     * @param client
-     * @return clientData
-     */
-    private ClientData populateClientData(final Client client) {
-        ClientData clientData = new ClientData();
-        clientData.setId(client.getId());
-        clientData.setName(client.getName());
-        clientData.setSurname(client.getSurname());
-        clientData.setEmail(client.getEmail());
-        clientData.setPhone(client.getPhone());
-        return clientData;
-    }
-
-    /**
-     * Method to map the front end customer object to the JPA customer entity.
-     * @param clientData
-     * @return client
-     */
-    private Client populateClientEntity(ClientData clientData) {
-        Client client = new Client();
-        client.setName(clientData.getName());
-        client.setSurname(clientData.getSurname());
-        client.setEmail(clientData.getEmail());
-        client.setPhone(clientData.getPhone());
-        return client;
     }
 }

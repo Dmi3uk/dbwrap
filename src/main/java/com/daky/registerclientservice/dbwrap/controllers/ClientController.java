@@ -1,7 +1,7 @@
 package com.daky.registerclientservice.dbwrap.controllers;
 
 import com.daky.registerclientservice.dbwrap.dto.ClientData;
-import com.daky.registerclientservice.dbwrap.services.RegisterService;
+import com.daky.registerclientservice.dbwrap.services.AbstractRegisterService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ import java.util.Optional;
 public class ClientController {
 
     @Resource(name = "clientService")
-    private RegisterService registerService;
+    private AbstractRegisterService registerService;
 
     @PostMapping(value = "/clients")
     public ResponseEntity<?> createClient(@RequestBody ClientData clientData) {
