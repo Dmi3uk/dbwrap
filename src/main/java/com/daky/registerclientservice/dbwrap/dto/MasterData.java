@@ -10,6 +10,7 @@ public class MasterData {
     private String phone;
     private String nickName;
     private Set<SkillsPrices> skillsPricesSet;
+    Set<TimetableRules> masterTimetableRulesSet;
 
     public MasterData() {
     }
@@ -69,5 +70,13 @@ public class MasterData {
 
     public void setSkillsPricesSet(Set<SkillsPrices> skillsPricesSet) {
         this.skillsPricesSet = skillsPricesSet;
+    }
+
+    public Set<TimetableRules> getMasterTimetableRulesSet() {
+        return masterTimetableRulesSet;
+    }
+
+    public void setMasterTimetableRulesSet(Set<TimetableRules> masterTimetableRulesSet) {
+        this.masterTimetableRulesSet = masterTimetableRulesSet;
     }
 }

@@ -24,12 +24,21 @@ CREATE TABLE skills (
 );
 
 CREATE TABLE master_skill_prices (
-  master_id INT UNSIGNED NOT NULL,
-  skill_id INT UNSIGNED NOT NULL,
+  msp_master_id INT UNSIGNED NOT NULL,
+  msp_skill_id INT UNSIGNED NOT NULL,
   price INT NOT NULL,
-  PRIMARY KEY (master_id, skill_id),
-  FOREIGN KEY (master_id) REFERENCES masters(id),
-  FOREIGN KEY (skill_id) REFERENCES skills(id)
+  PRIMARY KEY (msp_master_id, msp_skill_id),
+  FOREIGN KEY (msp_master_id) REFERENCES masters(id),
+  FOREIGN KEY (msp_skill_id) REFERENCES skills(id)
+);
+
+CREATE TABLE master_timetable_rules (
+  mtr_master_id INT UNSIGNED NOT NULL,
+  workday VARCHAR (250) NOT NULL,
+  startTime TIME NOT NULL,
+  endTime TIME  NOT NULL,
+  PRIMARY KEY (workday, mtr_master_id),
+  FOREIGN KEY (mtr_master_id) REFERENCES masters(id)
 );
 
 INSERT INTO clients (name, surname, email, phone)
@@ -49,10 +58,18 @@ VALUES ('Окрашивание бровей'),
        ('Долговременная укладка бровей'),
        ('Боттокс бровей');
 
-INSERT INTO master_skill_prices (master_id, skill_id, price)
+INSERT INTO master_skill_prices (msp_master_id, msp_skill_id, price)
 VALUES ('1', '1', '30'),
        ('1', '2', '20'),
        ('1', '3', '40'),
        ('2', '4', '55'),
        ('2', '5', '45'),
        ('3', '1', '20');
+
+INSERT INTO master_timetable_rules (mtr_master_id, workday, startTime, endTime)
+VALUES ('1', 'monday', '08:00:00', '18:00:00'),
+       ('1', 'Tuesday', '07:00:00', '16:00:00'),
+       ('1', 'Wednesday', '06:00:00', '15:00:00'),
+       ('2', 'monday', '07:00:00', '16:30:00'),
+       ('2', 'Tuesday', '10:00:00', '16:00:00'),
+       ('3', 'monday', '05:00:00', '14:00:00');

@@ -20,13 +20,13 @@ public class MasterSkillPrice {
     @ManyToOne
     @JsonIgnore
     @MapsId("masterID")
-    @JoinColumn(name = "master_id")
+    @JoinColumn(name = "msp_master_id")
     private Master master;
 
     @ManyToOne
     @JsonIgnore
     @MapsId("skillID")
-    @JoinColumn(name = "skill_id")
+    @JoinColumn(name = "msp_skill_id")
     private Skill skill;
 
     private int price;

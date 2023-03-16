@@ -6,20 +6,15 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class MasterSkillKey implements Serializable {
+public class MasterTimetableRulesKey implements Serializable {
 
-    @Column(name = "msp_master_id")
+    @Column(name = "mtr_master_id")
     private long masterID;
 
-    @Column(name = "msp_skill_id")
-    private long skillID;
+    @Column(name = "workday")
+    private String workday;
 
-    public MasterSkillKey() {
-    }
-
-    public MasterSkillKey(long masterID, long skillID) {
-        this.masterID = masterID;
-        this.skillID = skillID;
+    public MasterTimetableRulesKey() {
     }
 
     public long getMasterID() {
@@ -30,24 +25,24 @@ public class MasterSkillKey implements Serializable {
         this.masterID = masterID;
     }
 
-    public long getSkillID() {
-        return skillID;
+    public String getWorkday() {
+        return workday;
     }
 
-    public void setSkillID(long skillID) {
-        this.skillID = skillID;
+    public void setWorkday(String workday) {
+        this.workday = workday;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MasterSkillKey that = (MasterSkillKey) o;
-        return masterID == that.masterID && skillID == that.skillID;
+        MasterTimetableRulesKey that = (MasterTimetableRulesKey) o;
+        return masterID == that.masterID && Objects.equals(workday, that.workday);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(masterID, skillID);
+        return Objects.hash(masterID, workday);
     }
 }

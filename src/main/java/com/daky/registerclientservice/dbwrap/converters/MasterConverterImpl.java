@@ -2,6 +2,7 @@ package com.daky.registerclientservice.dbwrap.converters;
 
 import com.daky.registerclientservice.dbwrap.dto.MasterData;
 import com.daky.registerclientservice.dbwrap.dto.SkillsPrices;
+import com.daky.registerclientservice.dbwrap.dto.TimetableRules;
 import com.daky.registerclientservice.dbwrap.entries.Master;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,7 @@ public class MasterConverterImpl implements AbstractConverter<MasterData, Master
         masterData.setPhone(master.getPhone());
         masterData.setNickName(master.getNickName());
         masterData.setSkillsPricesSet(skillsPricesConverter(master));
+        masterData.setMasterTimetableRulesSet(timetableRulesConverter(master));
         return masterData;
     }
 
@@ -41,6 +43,16 @@ public class MasterConverterImpl implements AbstractConverter<MasterData, Master
                 map(item -> {
                     SkillsPrices skillsPrices = new SkillsPrices(item.getSkill().getTitle(), item.getPrice());
                     return skillsPrices;
+                }).collect(Collectors.toSet());
+
+    }
+
+    public Set<TimetableRules> timetableRulesConverter(Master master) {
+
+        return master.getMasterTimetableRulesSet().stream().
+                map(item -> {
+                    TimetableRules timetableRules = new TimetableRules(item.getWorkday(), item.getStartTime(), item.getEndTime());
+                    return timetableRules;
                 }).collect(Collectors.toSet());
 
     }
