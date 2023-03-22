@@ -46,10 +46,10 @@ public class MasterSkillPriceServiceImpl implements AbstractRegisterService<Mast
     }
 
     @Override
-    public boolean update(MasterSkillPriceData masterSkillPriceData, MasterSkillKey masterSkillKey) {
-        if (masterSkillPriceRepository.existsById(masterSkillKey)) {
+    public boolean update(MasterSkillPriceData masterSkillPriceData, MasterSkillKey id) {
+        if (masterSkillPriceRepository.existsById(id)) {
             MasterSkillPrice masterSkillPrice = masterSkillPriceConverter.populateEntity(masterSkillPriceData);
-            masterSkillPrice.setId(masterSkillKey);
+            masterSkillPrice.setId(id);
             masterSkillPriceRepository.save(masterSkillPrice);
             return true;
         }
@@ -57,9 +57,9 @@ public class MasterSkillPriceServiceImpl implements AbstractRegisterService<Mast
     }
 
     @Override
-    public boolean delete(MasterSkillKey masterSkillKey) {
-        if (masterSkillPriceRepository.existsById(masterSkillKey)) {
-            masterSkillPriceRepository.deleteById(masterSkillKey);
+    public boolean delete(MasterSkillKey id) {
+        if (masterSkillPriceRepository.existsById(id)) {
+            masterSkillPriceRepository.deleteById(id);
             return true;
         }
         return false;

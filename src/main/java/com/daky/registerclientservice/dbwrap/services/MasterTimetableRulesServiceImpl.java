@@ -38,16 +38,30 @@ public class MasterTimetableRulesServiceImpl implements AbstractRegisterService<
 
     @Override
     public Optional<MasterTimetableRulesData> getById(MasterTimetableRulesKey id) {
-        return Optional.empty();
+        Optional<MasterTimetableRules> masterTimetableRules = masterTimetableRulesRepository.findById(id);
+        if(masterTimetableRules.isEmpty()) {
+            return null;
+        }
+        return Optional.of(masterTimetableRulesConverter.populateData(masterTimetableRules.get()));
     }
 
     @Override
-    public boolean update(MasterTimetableRulesData entry, MasterTimetableRulesKey id) {
+    public boolean update(MasterTimetableRulesData masterTimetableRulesData, MasterTimetableRulesKey id) {
+        if (masterTimetableRulesRepository.existsById(id)) {
+            MasterTimetableRules masterTimetableRules = masterTimetableRulesConverter.populateEntity(masterTimetableRulesData);
+            masterTimetableRules.setId(id);
+            masterTimetableRulesRepository.save(masterTimetableRules);
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean delete(MasterTimetableRulesKey id) {
+        if (masterTimetableRulesRepository.existsById(id)) {
+            masterTimetableRulesRepository.deleteById(id);
+            return true;
+        }
         return false;
     }
 

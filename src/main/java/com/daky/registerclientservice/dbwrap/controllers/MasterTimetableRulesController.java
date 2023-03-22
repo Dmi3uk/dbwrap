@@ -1,6 +1,7 @@
 package com.daky.registerclientservice.dbwrap.controllers;
 
 import com.daky.registerclientservice.dbwrap.dto.MasterTimetableRulesData;
+import com.daky.registerclientservice.dbwrap.entries.compositekeys.MasterTimetableRulesKey;
 import com.daky.registerclientservice.dbwrap.services.AbstractRegisterService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class MasterTimetableRulesController {
@@ -37,35 +39,35 @@ public class MasterTimetableRulesController {
     }
 
     @GetMapping(value = "/masterTimetableRules/id")
-    public ResponseEntity<?> getMasterTimetableRulesByID(@RequestParam(name = "masterID") long masterID) {
-//        MasterTimetableRulesKey id = new MasterTimetableRulesKey(masterID);
-//        final Optional<MasterTimetableRulesData> masterTimetableRulesData = registerService.getById(id);
-//
-//        return masterTimetableRulesData != null
-//                ? new ResponseEntity<>(masterTimetableRulesData, HttpStatus.OK)
-//                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        return null;
+    public ResponseEntity<?> getMasterTimetableRulesByID(@RequestParam(name = "masterID") long masterID,
+                                                         @RequestParam(name = "workday") String workday) {
+        MasterTimetableRulesKey id = new MasterTimetableRulesKey(masterID, workday);
+        final Optional<MasterTimetableRulesData> masterTimetableRulesData = registerService.getById(id);
+
+        return masterTimetableRulesData != null
+                ? new ResponseEntity<>(masterTimetableRulesData, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping(value = "/masterTimetableRules/id")
     public ResponseEntity<?> updateMasterTimetableRules(@RequestParam(name = "masterID") long masterID,
-                                                    @RequestBody MasterTimetableRulesData masterTimetableRulesData) {
-//        MasterTimetableRulesKey id = new MasterTimetableRulesKey(masterID);
-//        final boolean updated = registerService.update(masterTimetableRulesData, id);
-//
-//        return updated
-//                ? new ResponseEntity<>(HttpStatus.OK)
-//                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
-        return null;
+                                                        @RequestParam(name = "workday") String workday,
+                                                        @RequestBody MasterTimetableRulesData masterTimetableRulesData) {
+        MasterTimetableRulesKey id = new MasterTimetableRulesKey(masterID, workday);
+        final boolean updated = registerService.update(masterTimetableRulesData, id);
+
+        return updated
+                ? new ResponseEntity<>(HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
     @DeleteMapping(value = "/masterTimetableRules/id")
-    public ResponseEntity<?> deleteMasterTimetableRules(@RequestParam(name = "masterID") long masterID) {
+    public ResponseEntity<?> deleteMasterTimetableRules(@RequestParam(name = "masterID") long masterID,
+                                                        @RequestParam(name = "workday") String workday) {
 
-//        MasterTimetableRulesKey id = new MasterTimetableRulesKey(masterID);
-//        return registerService.delete(id)
-//                ? new ResponseEntity<>(HttpStatus.OK)
-//                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
-        return null;
+        MasterTimetableRulesKey id = new MasterTimetableRulesKey(masterID, workday);
+        return registerService.delete(id)
+                ? new ResponseEntity<>(HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 }

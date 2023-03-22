@@ -9,7 +9,7 @@ public class MasterData {
     private String email;
     private String phone;
     private String nickName;
-    private Set<SkillsPrices> skillsPricesSet;
+    Set<SkillsPrices> skillsPricesSet;
     Set<TimetableRules> masterTimetableRulesSet;
 
     public MasterData() {

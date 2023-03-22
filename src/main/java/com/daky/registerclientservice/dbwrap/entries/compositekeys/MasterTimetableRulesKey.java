@@ -17,6 +17,11 @@ public class MasterTimetableRulesKey implements Serializable {
     public MasterTimetableRulesKey() {
     }
 
+    public MasterTimetableRulesKey(long masterID, String workday) {
+        this.masterID = masterID;
+        this.workday = workday;
+    }
+
     public long getMasterID() {
         return masterID;
     }
