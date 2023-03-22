@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class MasterTimetableRulesKey implements Serializable {
+public class MasterTimetableRuleKey implements Serializable {
 
     @Column(name = "mtr_master_id")
     private long masterID;
@@ -14,10 +14,10 @@ public class MasterTimetableRulesKey implements Serializable {
     @Column(name = "workday")
     private String workday;
 
-    public MasterTimetableRulesKey() {
+    public MasterTimetableRuleKey() {
     }
 
-    public MasterTimetableRulesKey(long masterID, String workday) {
+    public MasterTimetableRuleKey(long masterID, String workday) {
         this.masterID = masterID;
         this.workday = workday;
     }
@@ -42,7 +42,7 @@ public class MasterTimetableRulesKey implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MasterTimetableRulesKey that = (MasterTimetableRulesKey) o;
+        MasterTimetableRuleKey that = (MasterTimetableRuleKey) o;
         return masterID == that.masterID && Objects.equals(workday, that.workday);
     }
 

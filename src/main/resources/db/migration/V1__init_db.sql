@@ -41,6 +41,12 @@ CREATE TABLE master_timetable_rules (
   FOREIGN KEY (mtr_master_id) REFERENCES masters(id)
 );
 
+CREATE TABLE order_statuses (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  status VARCHAR (250) NOT NULL,
+  PRIMARY KEY (id)
+);
+
 INSERT INTO clients (name, surname, email, phone)
 VALUES ('Anton', 'Dmitruk', 'Dmi3uk@gmail.com', '+375(29)1655556'),
        ('Yury', 'Klimchuk', 'Klimchuk@gmail.com', '+375(29)1111111'),
@@ -73,3 +79,8 @@ VALUES ('1', 'monday', '08:00:00', '18:00:00'),
        ('2', 'monday', '07:00:00', '16:30:00'),
        ('2', 'Tuesday', '10:00:00', '16:00:00'),
        ('3', 'monday', '05:00:00', '14:00:00');
+
+INSERT INTO order_statuses (status)
+VALUES ('на рассмотрении'),
+       ('принят в работу'),
+       ('выполнен');

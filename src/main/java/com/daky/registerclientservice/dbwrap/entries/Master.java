@@ -35,7 +35,7 @@ public class Master {
     Set<MasterSkillPrice> masterSkillPriceSet;
 
     @OneToMany(mappedBy = "master")
-    Set<MasterTimetableRules> masterTimetableRulesSet;
+    Set<MasterTimetableRule> masterTimetableRuleSet;
 
     public Long getId() {
         return id;
@@ -93,12 +93,12 @@ public class Master {
         this.masterSkillPriceSet = masterSkillPriceSet;
     }
 
-    public Set<MasterTimetableRules> getMasterTimetableRulesSet() {
-        return masterTimetableRulesSet;
+    public Set<MasterTimetableRule> getMasterTimetableRulesSet() {
+        return masterTimetableRuleSet;
     }
 
-    public void setMasterTimetableRulesSet(Set<MasterTimetableRules> masterTimetableRulesSet) {
-        this.masterTimetableRulesSet = masterTimetableRulesSet;
+    public void setMasterTimetableRulesSet(Set<MasterTimetableRule> masterTimetableRuleSet) {
+        this.masterTimetableRuleSet = masterTimetableRuleSet;
     }
 }
 

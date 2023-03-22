@@ -17,7 +17,7 @@ public class SkillServiceImpl implements AbstractRegisterService<SkillData, Skil
     @Autowired
     private SkillRepository skillRepository;
     @Autowired
-    SkillConverterImpl skillConverter;
+    private SkillConverterImpl skillConverter;
 
     @Override
     public SkillData create(SkillData skillData) {

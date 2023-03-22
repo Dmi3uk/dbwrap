@@ -1,6 +1,6 @@
 package com.daky.registerclientservice.dbwrap.entries;
 
-import com.daky.registerclientservice.dbwrap.entries.compositekeys.MasterTimetableRulesKey;
+import com.daky.registerclientservice.dbwrap.entries.compositekeys.MasterTimetableRuleKey;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Column;
@@ -15,10 +15,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "master_timetable_rules")
-public class MasterTimetableRules {
+public class MasterTimetableRule {
 
     @EmbeddedId
-    private MasterTimetableRulesKey id;
+    private MasterTimetableRuleKey id;
 
     @ManyToOne
     @JsonIgnore
@@ -31,14 +31,14 @@ public class MasterTimetableRules {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
-    public MasterTimetableRules() {
+    public MasterTimetableRule() {
     }
 
-    public MasterTimetableRulesKey getId() {
+    public MasterTimetableRuleKey getId() {
         return id;
     }
 
-    public void setId(MasterTimetableRulesKey id) {
+    public void setId(MasterTimetableRuleKey id) {
         this.id = id;
     }
 

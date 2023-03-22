@@ -17,7 +17,7 @@ public class ClientServiceImpl implements AbstractRegisterService<ClientData, Cl
     @Autowired
     private ClientRepository clientRepository;
     @Autowired
-    ClientConverterImpl clientConverter;
+    private ClientConverterImpl clientConverter;
 
     @Override
     public ClientData create(ClientData clientData) {

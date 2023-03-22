@@ -1,14 +1,14 @@
 package com.daky.registerclientservice.dbwrap.dto.compositedata;
 
-public class MasterTimetableRulesKeyData {
+public class MasterTimetableRuleKeyData {
     private long masterID;
 
     private String workday;
 
-    public MasterTimetableRulesKeyData() {
+    public MasterTimetableRuleKeyData() {
     }
 
-    public MasterTimetableRulesKeyData(long masterID, String workday) {
+    public MasterTimetableRuleKeyData(long masterID, String workday) {
         this.masterID = masterID;
         this.workday = workday;
     }

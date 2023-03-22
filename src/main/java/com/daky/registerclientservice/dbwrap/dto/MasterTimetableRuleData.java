@@ -1,26 +1,26 @@
 package com.daky.registerclientservice.dbwrap.dto;
 
 import com.daky.registerclientservice.dbwrap.entries.Master;
-import com.daky.registerclientservice.dbwrap.entries.compositekeys.MasterTimetableRulesKey;
+import com.daky.registerclientservice.dbwrap.entries.compositekeys.MasterTimetableRuleKey;
 
 import java.time.LocalDateTime;
 
-public class MasterTimetableRulesData {
+public class MasterTimetableRuleData {
 
-    private MasterTimetableRulesKey id;
+    private MasterTimetableRuleKey id;
     private Master master;
     private String workday;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
-    public MasterTimetableRulesData() {
+    public MasterTimetableRuleData() {
     }
 
-    public MasterTimetableRulesKey getId() {
+    public MasterTimetableRuleKey getId() {
         return id;
     }
 
-    public void setId(MasterTimetableRulesKey id) {
+    public void setId(MasterTimetableRuleKey id) {
         this.id = id;
     }
 

@@ -18,7 +18,7 @@ public class MasterSkillPriceServiceImpl implements AbstractRegisterService<Mast
     @Autowired
     private MasterSkillPriceRepository masterSkillPriceRepository;
     @Autowired
-    MasterSkillPriceConverterImpl masterSkillPriceConverter;
+    private MasterSkillPriceConverterImpl masterSkillPriceConverter;
 
     @Override
     public MasterSkillPriceData create(MasterSkillPriceData masterSkillPriceData) {
