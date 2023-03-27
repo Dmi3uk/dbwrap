@@ -1,11 +1,11 @@
 package com.daky.registerclientservice.dbwrap.dto;
 
+import com.daky.registerclientservice.dbwrap.dto.compositedata.MasterSkillKeyData;
 import com.daky.registerclientservice.dbwrap.entries.Master;
 import com.daky.registerclientservice.dbwrap.entries.Skill;
-import com.daky.registerclientservice.dbwrap.entries.compositekeys.MasterSkillKey;
 
 public class MasterSkillPriceData {
-    private MasterSkillKey id;
+    private MasterSkillKeyData id;
     private Master master;
     private Skill skill;
     private int price;
@@ -13,11 +13,11 @@ public class MasterSkillPriceData {
     public MasterSkillPriceData() {
     }
 
-    public MasterSkillKey getId() {
+    public MasterSkillKeyData getId() {
         return id;
     }
 
-    public void setId(MasterSkillKey id) {
+    public void setId(MasterSkillKeyData id) {
         this.id = id;
     }
 

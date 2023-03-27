@@ -7,11 +7,6 @@ public class MasterSkillKeyData {
     public MasterSkillKeyData() {
     }
 
-    public MasterSkillKeyData(long masterID, long skillID) {
-        this.masterID = masterID;
-        this.skillID = skillID;
-    }
-
     public long getMasterID() {
         return masterID;
     }

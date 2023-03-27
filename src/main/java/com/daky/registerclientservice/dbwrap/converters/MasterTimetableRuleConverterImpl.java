@@ -1,7 +1,9 @@
 package com.daky.registerclientservice.dbwrap.converters;
 
 import com.daky.registerclientservice.dbwrap.dto.MasterTimetableRuleData;
+import com.daky.registerclientservice.dbwrap.dto.compositedata.MasterTimetableRuleKeyData;
 import com.daky.registerclientservice.dbwrap.entries.MasterTimetableRule;
+import com.daky.registerclientservice.dbwrap.entries.compositekeys.MasterTimetableRuleKey;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -9,7 +11,7 @@ public class MasterTimetableRuleConverterImpl implements AbstractConverter<Maste
     @Override
     public MasterTimetableRuleData populateData(MasterTimetableRule masterTimetableRule) {
         MasterTimetableRuleData masterTimetableRuleData = new MasterTimetableRuleData();
-        masterTimetableRuleData.setId(masterTimetableRule.getId());
+        masterTimetableRuleData.setId(populateKeyData(masterTimetableRule.getId()));
         masterTimetableRuleData.setMaster(masterTimetableRule.getMaster());
         masterTimetableRuleData.setWorkday(masterTimetableRule.getWorkday());
         masterTimetableRuleData.setStartTime(masterTimetableRule.getStartTime());
@@ -20,11 +22,25 @@ public class MasterTimetableRuleConverterImpl implements AbstractConverter<Maste
     @Override
     public MasterTimetableRule populateEntity(MasterTimetableRuleData masterTimetableRuleData) {
         MasterTimetableRule masterTimetableRule = new MasterTimetableRule();
-        masterTimetableRule.setId(masterTimetableRuleData.getId());
+        masterTimetableRule.setId(populateKeyEntity(masterTimetableRuleData.getId()));
         masterTimetableRule.setMaster(masterTimetableRuleData.getMaster());
         masterTimetableRule.setWorkday(masterTimetableRuleData.getWorkday());
         masterTimetableRule.setStartTime(masterTimetableRuleData.getStartTime());
         masterTimetableRule.setEndTime(masterTimetableRuleData.getEndTime());
         return masterTimetableRule;
+    }
+
+    public MasterTimetableRuleKeyData populateKeyData(MasterTimetableRuleKey masterTimetableRuleKey) {
+        MasterTimetableRuleKeyData masterTimetableRuleKeyData = new MasterTimetableRuleKeyData();
+        masterTimetableRuleKeyData.setMasterID(masterTimetableRuleKey.getMasterID());
+        masterTimetableRuleKeyData.setWorkday(masterTimetableRuleKey.getWorkday());
+        return masterTimetableRuleKeyData;
+    }
+
+    public MasterTimetableRuleKey populateKeyEntity(MasterTimetableRuleKeyData masterTimetableRuleKeyData) {
+        MasterTimetableRuleKey masterTimetableRuleKey = new MasterTimetableRuleKey();
+        masterTimetableRuleKey.setMasterID(masterTimetableRuleKeyData.getMasterID());
+        masterTimetableRuleKey.setWorkday(masterTimetableRuleKeyData.getWorkday());
+        return masterTimetableRuleKey;
     }
 }
