@@ -47,6 +47,20 @@ CREATE TABLE order_statuses (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE orders (
+  order_master_id INT UNSIGNED NOT NULL,
+  order_client_id INT UNSIGNED NOT NULL,
+  order_skill_id INT UNSIGNED NOT NULL,
+  order_status_id INT UNSIGNED NOT NULL,
+  startTime TIME NOT NULL,
+  endTime TIME  NOT NULL,
+  PRIMARY KEY (order_master_id, order_client_id, order_skill_id, order_status_id),
+  FOREIGN KEY (order_master_id) REFERENCES masters(id),
+  FOREIGN KEY (order_client_id) REFERENCES clients(id),
+  FOREIGN KEY (order_skill_id) REFERENCES skills(id),
+  FOREIGN KEY (order_status_id) REFERENCES order_statuses(id)
+);
+
 INSERT INTO clients (name, surname, email, phone)
 VALUES ('Anton', 'Dmitruk', 'Dmi3uk@gmail.com', '+375(29)1655556'),
        ('Yury', 'Klimchuk', 'Klimchuk@gmail.com', '+375(29)1111111'),
@@ -84,3 +98,8 @@ INSERT INTO order_statuses (status)
 VALUES ('на рассмотрении'),
        ('принят в работу'),
        ('выполнен');
+
+INSERT INTO orders (order_master_id, order_client_id, order_skill_id, order_status_id, startTime, endTime)
+VALUES ('1', '1', '1', '1', '08:00:00', '09:00:00'),
+       ('1', '2', '2', '2', '09:00:00', '10:00:00'),
+       ('1', '3', '3', '3', '11:00:00', '12:00:00');

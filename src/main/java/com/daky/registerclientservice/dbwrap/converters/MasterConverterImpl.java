@@ -1,9 +1,11 @@
 package com.daky.registerclientservice.dbwrap.converters;
 
 import com.daky.registerclientservice.dbwrap.dto.MasterData;
-import com.daky.registerclientservice.dbwrap.dto.SkillsPrices;
-import com.daky.registerclientservice.dbwrap.dto.TimetableRules;
+import com.daky.registerclientservice.dbwrap.dto.MasterSkillPriceData;
+import com.daky.registerclientservice.dbwrap.dto.MasterTimetableRuleData;
+import com.daky.registerclientservice.dbwrap.dto.OrderData;
 import com.daky.registerclientservice.dbwrap.entries.Master;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -11,6 +13,13 @@ import java.util.stream.Collectors;
 
 @Component
 public class MasterConverterImpl implements AbstractConverter<MasterData, Master> {
+
+    @Autowired
+    MasterSkillPriceConverterImpl masterSkillPriceConverter;
+    @Autowired
+    MasterTimetableRuleConverterImpl masterTimetableRuleConverter;
+    @Autowired
+    OrderConverterImpl orderConverter;
 
     @Override
     public MasterData populateData(final Master master) {
@@ -21,8 +30,9 @@ public class MasterConverterImpl implements AbstractConverter<MasterData, Master
         masterData.setEmail(master.getEmail());
         masterData.setPhone(master.getPhone());
         masterData.setNickName(master.getNickName());
-        masterData.setSkillsPricesSet(skillsPricesConverter(master));
-        masterData.setMasterTimetableRulesSet(timetableRulesConverter(master));
+        masterData.setMasterSkillPriceDataSet(masterSkillPriceDataSetConverter(master));
+        masterData.setMasterTimetableRuleDataSet(masterTimetableRuleDataSetConverter(master));
+        masterData.setOrderDataSet(orderConverters(master));
         return masterData;
     }
 
@@ -37,23 +47,25 @@ public class MasterConverterImpl implements AbstractConverter<MasterData, Master
         return master;
     }
 
-    public Set<SkillsPrices> skillsPricesConverter(Master master) {
+    public Set<MasterSkillPriceData> masterSkillPriceDataSetConverter(Master master) {
 
         return master.getMasterSkillPriceSet().stream().
-                map(item -> {
-                    SkillsPrices skillsPrices = new SkillsPrices(item.getSkill().getTitle(), item.getPrice());
-                    return skillsPrices;
-                }).collect(Collectors.toSet());
+                map(item -> masterSkillPriceConverter.populateData(item)).collect(Collectors.toSet());
 
     }
 
-    public Set<TimetableRules> timetableRulesConverter(Master master) {
+    public Set<MasterTimetableRuleData> masterTimetableRuleDataSetConverter(Master master) {
 
-        return master.getMasterTimetableRulesSet().stream().
-                map(item -> {
-                    TimetableRules timetableRules = new TimetableRules(item.getWorkday(), item.getStartTime(), item.getEndTime());
-                    return timetableRules;
-                }).collect(Collectors.toSet());
+        return master.getMasterTimetableRuleSet().stream().
+                map(item -> masterTimetableRuleConverter.populateData(item)).collect(Collectors.toSet());
 
     }
+
+    public Set<OrderData> orderConverters(Master master) {
+
+       return master.getOrderSet().stream().map(item -> orderConverter.populateData(item)).collect(Collectors.toSet());
+
+    }
+
+
 }

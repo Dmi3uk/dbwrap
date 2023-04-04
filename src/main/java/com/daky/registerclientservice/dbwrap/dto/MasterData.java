@@ -9,8 +9,9 @@ public class MasterData {
     private String email;
     private String phone;
     private String nickName;
-    Set<SkillsPrices> skillsPricesSet;
-    Set<TimetableRules> masterTimetableRulesSet;
+    Set<MasterSkillPriceData> masterSkillPriceDataSet;
+    Set<MasterTimetableRuleData> masterTimetableRuleDataSet;
+    Set<OrderData> orderDataSet;
 
     public MasterData() {
     }
@@ -64,19 +65,27 @@ public class MasterData {
         this.nickName = nickName;
     }
 
-    public Set<SkillsPrices> getSkillsPricesSet() {
-        return skillsPricesSet;
+    public Set<MasterSkillPriceData> getMasterSkillPriceDataSet() {
+        return masterSkillPriceDataSet;
     }
 
-    public void setSkillsPricesSet(Set<SkillsPrices> skillsPricesSet) {
-        this.skillsPricesSet = skillsPricesSet;
+    public void setMasterSkillPriceDataSet(Set<MasterSkillPriceData> masterSkillPriceDataSet) {
+        this.masterSkillPriceDataSet = masterSkillPriceDataSet;
     }
 
-    public Set<TimetableRules> getMasterTimetableRulesSet() {
-        return masterTimetableRulesSet;
+    public Set<MasterTimetableRuleData> getMasterTimetableRuleDataSet() {
+        return masterTimetableRuleDataSet;
     }
 
-    public void setMasterTimetableRulesSet(Set<TimetableRules> masterTimetableRulesSet) {
-        this.masterTimetableRulesSet = masterTimetableRulesSet;
+    public void setMasterTimetableRuleDataSet(Set<MasterTimetableRuleData> masterTimetableRuleDataSet) {
+        this.masterTimetableRuleDataSet = masterTimetableRuleDataSet;
+    }
+
+    public Set<OrderData> getOrderDataSet() {
+        return orderDataSet;
+    }
+
+    public void setOrderDataSet(Set<OrderData> orderDataSet) {
+        this.orderDataSet = orderDataSet;
     }
 }
